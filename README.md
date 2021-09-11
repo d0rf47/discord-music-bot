@@ -1,5 +1,5 @@
 # d0rf-Discord-Music-Bot
-## A Node Js based Discord Music Bot. Can play songs from YouTube or Spotify and also spotify playlists.
+## A Node Js based Discord Music Bot. Can play single songs from YouTube or Spotify and entire spotify playlists.
 
 ### Requires FFmpeg 
 `npm install discord.js@^12.5.3 ffmpeg fluent-ffmpeg @discordjs/opus ytdl-core --save`  
@@ -20,4 +20,4 @@ https://www.ffmpeg.org/
 
 ##### Helpful links 
 
-Basic setup tutorial from https://github.com/TannerGabriel : https://gabrieltanner.org/blog/dicord-music-bot
+Basic discord.js setup tutorial from https://github.com/TannerGabriel : https://gabrieltanner.org/blog/dicord-music-bot
