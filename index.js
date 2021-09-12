@@ -88,26 +88,7 @@ execute = async (message, serverQueue) =>
       volume: 5,
       playing: true
     };
-
-    try 
-    {
-      const songData = await ytdl.getInfo(args[1]);  // uses second index of message via arg array (song url) to get data
-      song =
-      {
-        title: songData.videoDetails.title,         // song title for display 
-        url: songData.videoDetails.video_url        // actual youtube url used to decode video and play
-      };
-      // used to handle error thrown for spotify songs
-    } catch (error) 
-    {
-      // spotify alternative options 
-      let alt = await searchAlternative(args[1], message, queueConstruct);
-      song =
-      {
-        title: alt.title,
-        url: alt.url
-      }
-    }
+    song = await getSongData(args, message, queueConstruct);
 
     queue.set(message.guild.id, queueConstruct);
     queueConstruct.songs.push(song);
@@ -127,6 +108,7 @@ execute = async (message, serverQueue) =>
     }
   } else 
   {
+    song = await getSongData(args, message, queue.get(message.guild.id));
     serverQueue.songs.push(song);
     return message.channel.send(`${song.title} has been added to the queue!`);
   }
@@ -193,6 +175,32 @@ play = (guild, song) =>
 }
 
 //Helper functions
+
+
+async function getSongData(args, message, queueConstruct)
+{
+  let song = {};
+  try 
+  {
+    const songData = await ytdl.getInfo(args[1]);  // uses second index of message via arg array (song url) to get data
+    song =
+    {
+      title: songData.videoDetails.title,         // song title for display 
+      url: songData.videoDetails.video_url        // actual youtube url used to decode video and play
+    };
+    // used to handle error thrown for spotify songs
+  } catch (error) 
+  {
+    // spotify alternative options 
+    let alt = await searchAlternative(args[1], message, queueConstruct);
+    song =
+    {
+      title: alt.title,
+      url: alt.url
+    }
+  }
+  return song;
+}
 
 /**
  * Searches youtube for songs that match spotify 
