@@ -39,7 +39,9 @@ client.on('message', async message =>
   if (!message.content.startsWith(prefix))
     return;
   //commands for execution    
-  if (message.content.startsWith(`${prefix}play`)) 
+  console.log(message)
+  
+  if (message.content.toLowerCase().startsWith(`${prefix}play`) || message.content.toLowerCase().startsWith(`${prefix}ply`)) 
   {
     execute(message, serverQueue);
     return;
@@ -212,9 +214,10 @@ async function getSongData(args, message, queueConstruct)
 async function searchAlternative(songUrl, message, queueConstruct) 
 {
   //gets song data from spotify-info-api
+  //console.log(songUrl)
   let preview = await getPreview(songUrl)
-  
-  if (preview.type === 'playlist')
+  //console.log(preview)
+  if (preview.type === 'playlist' || preview.type === 'album')
   {
     message.channel.send("Building playlist please wait a moment while i slave away for you 😭" );
     buildPlaylist(songUrl, message, queueConstruct)
