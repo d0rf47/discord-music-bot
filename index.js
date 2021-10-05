@@ -39,21 +39,20 @@ client.on('message', async message =>
   if (!message.content.startsWith(prefix))
     return;
   //commands for execution    
-  console.log(message)
-  
+    
   if (message.content.toLowerCase().startsWith(`${prefix}play`) || message.content.toLowerCase().startsWith(`${prefix}ply`)) 
   {
     execute(message, serverQueue);
     return;
-  } else if (message.content.startsWith(`${prefix}skip`)) 
+  } else if (message.content.toLowerCase().startsWith(`${prefix}skip`)) 
   {
     skip(message, serverQueue);
     return;
-  } else if (message.content.startsWith(`${prefix}stop`)) 
+  } else if (message.content.toLowerCase().startsWith(`${prefix}stop`)) 
   {
     stop(message, serverQueue);
     return;
-  } else if (message.content.startsWith(`${prefix}queue`)) 
+  } else if (message.content.toLowerCase().startsWith(`${prefix}queue`)) 
   {
     listQueue(message, serverQueue)
   } else 
@@ -70,11 +69,12 @@ execute = async (message, serverQueue) =>
   const args = message.content.split(" ");   //splits the message command from the url for playing music from
   const vc = message.member.voice.channel;
   let song = {};
-  const permission = vc.permissionsFor(message.client.user);
+  
 
   if (!vc)
     return message.channel.send("Must be in Voice channel to play music!");
 
+  const permission = vc.permissionsFor(message.client.user);  
   if (!permission.has("CONNECT") || !permission.has("SPEAK"))
     return message.channel.send("Invalid Permissions to play in this Voice Channel!");
 
