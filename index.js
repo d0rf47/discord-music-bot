@@ -38,8 +38,8 @@ client.on('message', async message =>
   //check for msg prefix if not for bot return
   if (!message.content.startsWith(prefix))
     return;
-  //commands for execution    
-    
+
+  //commands for execution        
   if (message.content.toLowerCase().startsWith(`${prefix}play`) || message.content.toLowerCase().startsWith(`${prefix}ply`)) 
   {
     execute(message, serverQueue);
@@ -90,7 +90,12 @@ execute = async (message, serverQueue) =>
       volume: 5,
       playing: true
     };
-    song = await getSongData(args, message, queueConstruct);
+    try {
+      song = await getSongData(args, message, queueConstruct);  
+    } catch (error) {
+      console.log(error)
+    }
+    
 
     queue.set(message.guild.id, queueConstruct);
     queueConstruct.songs.push(song);
